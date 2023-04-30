@@ -27,8 +27,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "lcd.h"
-#include "touch.h"
+#include "../../Drivers/BSP/LCD/lcd.h"
+#include "../../Drivers/BSP/LCD_TOUCH/touch.h"
 #include "test_functions.h"
 /* USER CODE END Includes */
 

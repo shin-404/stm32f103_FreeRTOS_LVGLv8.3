@@ -21,7 +21,7 @@
 #include "fsmc.h"
 
 /* USER CODE BEGIN 0 */
-#include "lcd.h"
+#include "../../Drivers/BSP/LCD/lcd.h"
 /* USER CODE END 0 */
 
 SRAM_HandleTypeDef hsram1;
