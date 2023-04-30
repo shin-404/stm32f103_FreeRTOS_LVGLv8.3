@@ -28,6 +28,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "lcd.h"
+#include "touch.h"
+#include "test_functions.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -96,9 +98,29 @@ int main(void)
   MX_USART1_UART_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
+  key_init();
   lcd_init();
-  lcd_display_on();
-  lcd_clear(WHITE);
+  tp_dev.init();
+  lcd_show_string(30, 50, 200, 16, 16, "STM32", RED);
+  lcd_show_string(30, 70, 200, 16, 16, "TOUCH TEST", RED);
+  lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
+
+  if (tp_dev.touchtype != 0XFF)
+  {
+    lcd_show_string(30, 110, 200, 16, 16, "Press KEY0 to Adjust", RED); /* µÁ◊Ë∆¡≤≈œ‘ æ */
+  }
+
+  delay_ms(1500);
+  load_draw_dialog();
+
+  if (tp_dev.touchtype & 0X80)
+  {
+    ctp_test(); /* µÁ»›∆¡≤‚ ‘ */
+  }
+  else
+  {
+    rtp_test(); /* µÁ◊Ë∆¡≤‚ ‘ */
+  }
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

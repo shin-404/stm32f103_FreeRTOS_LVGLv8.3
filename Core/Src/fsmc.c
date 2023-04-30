@@ -220,6 +220,7 @@ static void HAL_FSMC_MspDeInit(void){
 
 void HAL_SRAM_MspDeInit(SRAM_HandleTypeDef* sramHandle){
   /* USER CODE BEGIN SRAM_MspDeInit 0 */
+  /*Maybe it can be deleted*/
   myHAL_SRAM_MspInit(sramHandle);
   return;
   /* USER CODE END SRAM_MspDeInit 0 */

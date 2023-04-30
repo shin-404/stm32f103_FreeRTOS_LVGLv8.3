@@ -5,18 +5,6 @@
 #include "lcd.h"
 #include "main.h"
 
-#define delay_ms(xms) HAL_Delay(xms)
-
-void delay_us(uint32_t xus)
-{
-  uint32_t Delay = xus * 168/4;
-  do
-  {
-    __NOP();
-  }
-  while (Delay --);
-}
-
 /**
  * @brief       ST7789 寄存器初始化代码
  * @param       无
