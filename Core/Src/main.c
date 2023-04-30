@@ -20,16 +20,15 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
-#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "../../Drivers/BSP/LCD/lcd.h"
-#include "../../Drivers/BSP/LCD_TOUCH/touch.h"
-#include "test_functions.h"
+#include "../../BSP/LVGL/lvgl.h"
+#include "../../BSP/LVGL/porting/lv_port_disp.h"
+#include "../../BSP/LVGL/porting/lv_port_indev.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -100,13 +99,14 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_TIM2_Init();
-  MX_TIM3_Init();
-  MX_TIM4_Init();
   MX_USART1_UART_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
-  tftLCD_test();
+  lv_init();
+  if(USE_LVGL_DISP)
+    lv_port_disp_init();
+  if(USE_LVGL_INDEV)
+    lv_port_indev_init();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

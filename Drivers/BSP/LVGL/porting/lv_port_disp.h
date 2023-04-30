@@ -20,13 +20,15 @@ extern "C" {
 #if defined(LV_LVGL_H_INCLUDE_SIMPLE)
 #include "lvgl.h"
 #else
+
 #include "../../BSP/LVGL/lvgl.h"
+
 #endif
 
 /*********************
  *      DEFINES
  *********************/
-void lv_port_disp_init(void);
+
 /**********************
  *      TYPEDEFS
  **********************/

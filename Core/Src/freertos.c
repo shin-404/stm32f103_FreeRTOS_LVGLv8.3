@@ -26,6 +26,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "../../BSP/LVGL/lvgl.h"
+#include "../../BSP/LVGL/porting/lv_port_disp.h"
+#include "../../BSP/LVGL/porting/lv_port_indev.h"
 
 /* USER CODE END Includes */
 
@@ -50,7 +53,7 @@
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId lightTaskHandle;
-osThreadId PWMTim2TaskHandle;
+osThreadId lvgl_heartbeatHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -59,7 +62,7 @@ osThreadId PWMTim2TaskHandle;
 
 void StartDefaultTask(void const * argument);
 void StartLightTask(void const * argument);
-void StartPWMTim2Task(void const * argument);
+void lvgl_heartbeat_func(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -114,9 +117,9 @@ void MX_FREERTOS_Init(void) {
   osThreadDef(lightTask, StartLightTask, osPriorityIdle, 0, 128);
   lightTaskHandle = osThreadCreate(osThread(lightTask), NULL);
 
-  /* definition and creation of PWMTim2Task */
-  osThreadDef(PWMTim2Task, StartPWMTim2Task, osPriorityIdle, 0, 128);
-  PWMTim2TaskHandle = osThreadCreate(osThread(PWMTim2Task), NULL);
+  /* definition and creation of lvgl_heartbeat */
+  osThreadDef(lvgl_heartbeat, lvgl_heartbeat_func, osPriorityIdle, 0, 128);
+  lvgl_heartbeatHandle = osThreadCreate(osThread(lvgl_heartbeat), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -160,22 +163,23 @@ __weak void StartLightTask(void const * argument)
   /* USER CODE END StartLightTask */
 }
 
-/* USER CODE BEGIN Header_StartPWMTim2Task */
+/* USER CODE BEGIN Header_lvgl_heartbeat_func */
 /**
-* @brief Function implementing the PWMTim2Task thread.
+* @brief Function implementing the lvgl_heartbeat thread.
 * @param argument: Not used
 * @retval None
 */
-/* USER CODE END Header_StartPWMTim2Task */
-__weak void StartPWMTim2Task(void const * argument)
+/* USER CODE END Header_lvgl_heartbeat_func */
+void lvgl_heartbeat_func(void const * argument)
 {
-  /* USER CODE BEGIN StartPWMTim2Task */
+  /* USER CODE BEGIN lvgl_heartbeat_func */
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    lv_timer_handler();
+    osDelay(5);
   }
-  /* USER CODE END StartPWMTim2Task */
+  /* USER CODE END lvgl_heartbeat_func */
 }
 
 /* Private application code --------------------------------------------------*/
