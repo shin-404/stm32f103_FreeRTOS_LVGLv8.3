@@ -55,7 +55,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void delay_us(uint32_t xus);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -64,7 +64,7 @@ void Error_Handler(void);
 #define LED0_Pin GPIO_PIN_5
 #define LED0_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define delay_ms(xms) HAL_Delay(xms)
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

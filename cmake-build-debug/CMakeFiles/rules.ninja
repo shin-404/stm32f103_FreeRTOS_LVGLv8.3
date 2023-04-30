@@ -35,8 +35,10 @@ rule C_COMPILER__FreeRTOS_clion_model.2eelf_Debug
 # Rule for linking C executable.
 
 rule C_EXECUTABLE_LINKER__FreeRTOS_clion_model.2eelf_Debug
-  command = cmd.exe /C "$PRE_LINK && "E:\GNU\10 2021.10\bin\arm-none-eabi-gcc.exe" $FLAGS $LINK_FLAGS $in -o $TARGET_FILE $LINK_PATH $LINK_LIBRARIES && $POST_BUILD"
+  command = cmd.exe /C "$PRE_LINK && "E:\GNU\10 2021.10\bin\arm-none-eabi-gcc.exe" $FLAGS $LINK_FLAGS @$RSP_FILE -o $TARGET_FILE  && $POST_BUILD"
   description = Linking C executable $TARGET_FILE
+  rspfile = $RSP_FILE
+  rspfile_content = $in $LINK_PATH $LINK_LIBRARIES
   restat = $RESTAT
 
 
