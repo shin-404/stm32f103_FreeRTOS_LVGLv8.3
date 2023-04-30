@@ -56,7 +56,15 @@
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-
+void delay_us(uint32_t xus)
+{
+  uint32_t Delay = xus * 168/4;
+  do
+  {
+    __NOP();
+  }
+  while (Delay --);
+}
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -98,29 +106,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_FSMC_Init();
   /* USER CODE BEGIN 2 */
-  key_init();
-  lcd_init();
-  tp_dev.init();
-  lcd_show_string(30, 50, 200, 16, 16, "STM32", RED);
-  lcd_show_string(30, 70, 200, 16, 16, "TOUCH TEST", RED);
-  lcd_show_string(30, 90, 200, 16, 16, "ATOM@ALIENTEK", RED);
-
-  if (tp_dev.touchtype != 0XFF)
-  {
-    lcd_show_string(30, 110, 200, 16, 16, "Press KEY0 to Adjust", RED); /* µÁ◊Ë∆¡≤≈œ‘ æ */
-  }
-
-  delay_ms(1500);
-  load_draw_dialog();
-
-  if (tp_dev.touchtype & 0X80)
-  {
-    ctp_test(); /* µÁ»›∆¡≤‚ ‘ */
-  }
-  else
-  {
-    rtp_test(); /* µÁ◊Ë∆¡≤‚ ‘ */
-  }
+  tftLCD_test();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */

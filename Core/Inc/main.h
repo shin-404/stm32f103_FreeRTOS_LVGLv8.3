@@ -55,15 +55,7 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void delay_us(uint32_t xus)
-{
-  uint32_t Delay = xus * 168/4;
-  do
-  {
-    __NOP();
-  }
-  while (Delay --);
-}
+void delay_us(uint32_t xus);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
