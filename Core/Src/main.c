@@ -20,6 +20,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 #include "fsmc.h"
@@ -29,6 +30,7 @@
 #include "../../BSP/LVGL/lvgl.h"
 #include "../../BSP/LVGL/porting/lv_port_disp.h"
 #include "../../BSP/LVGL/porting/lv_port_indev.h"
+#include "../../Drivers/BSP/LVGL_APP/lv_demo_benchmark.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -94,19 +96,20 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_FSMC_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   lv_init();
   if(USE_LVGL_DISP)
     lv_port_disp_init();
-  if(USE_LVGL_INDEV)
-    lv_port_indev_init();
+//  if(USE_LVGL_INDEV)
+//    lv_port_indev_init();
+  lv_demo_benchmark();
   /* USER CODE END 2 */
 
   /* Call init function for freertos objects (in freertos.c) */
@@ -185,7 +188,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
+  if(htim->Instance == TIM2)
+  {
 
+  }
   /* USER CODE END Callback 1 */
 }
 

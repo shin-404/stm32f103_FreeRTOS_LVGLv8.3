@@ -727,7 +727,7 @@ void lcd_init(void)
    * 这行 printf 语句 !!!!!!!
    */
 //  printf("LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
-  print_UARTx(huart1, "LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
+//  print_UARTx(huart1, "LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
 
   if (lcddev.id == 0X7789)
   {

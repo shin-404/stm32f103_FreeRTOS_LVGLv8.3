@@ -8,7 +8,7 @@
  *********************/
 #include "lv_img_decoder.h"
 #include "../misc/lv_assert.h"
-#include "lv_draw_img.h"
+#include "../draw/lv_draw_img.h"
 #include "../misc/lv_ll.h"
 #include "../misc/lv_gc.h"
 

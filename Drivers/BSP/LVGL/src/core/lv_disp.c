@@ -8,7 +8,7 @@
  *********************/
 #include "lv_disp.h"
 #include "../misc/lv_math.h"
-#include "lv_refr.h"
+#include "../core/lv_refr.h"
 
 /*********************
  *      DEFINES

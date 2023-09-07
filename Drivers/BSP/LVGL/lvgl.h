@@ -63,6 +63,7 @@ extern "C" {
 
 #include "src/lv_api_map.h"
 
+#include "use_list.h"
 /*-----------------
  * EXTRAS
  *----------------*/

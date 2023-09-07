@@ -9,7 +9,7 @@
  *      INCLUDES
  *********************/
 #include "../misc/lv_assert.h"
-#include "lv_hal_indev.h"
+#include "../hal/lv_hal_indev.h"
 #include "../core/lv_indev.h"
 #include "../misc/lv_mem.h"
 #include "../misc/lv_gc.h"

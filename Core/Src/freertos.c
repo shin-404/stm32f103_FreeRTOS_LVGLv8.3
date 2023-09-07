@@ -54,6 +54,7 @@
 osThreadId defaultTaskHandle;
 osThreadId lightTaskHandle;
 osThreadId lvgl_heartbeatHandle;
+osThreadId init_taskHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -63,11 +64,26 @@ osThreadId lvgl_heartbeatHandle;
 void StartDefaultTask(void const * argument);
 void StartLightTask(void const * argument);
 void lvgl_heartbeat_func(void const * argument);
+void start_init_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 /* GetIdleTaskMemory prototype (linked to static allocation support) */
 void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
+
+/* Hook prototypes */
+void vApplicationTickHook(void);
+
+/* USER CODE BEGIN 3 */
+__weak void vApplicationTickHook( void )
+{
+   /* This function will be called by each tick interrupt if
+   configUSE_TICK_HOOK is set to 1 in FreeRTOSConfig.h. User code can be
+   added here, but the tick hook is called from an interrupt context, so
+   code must not attempt to block, and only the interrupt safe FreeRTOS API
+   functions can be used (those that end in FromISR()). */
+}
+/* USER CODE END 3 */
 
 /* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
 static StaticTask_t xIdleTaskTCBBuffer;
@@ -110,16 +126,20 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityLow, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* definition and creation of lightTask */
-  osThreadDef(lightTask, StartLightTask, osPriorityIdle, 0, 128);
+  osThreadDef(lightTask, StartLightTask, osPriorityNormal, 0, 128);
   lightTaskHandle = osThreadCreate(osThread(lightTask), NULL);
 
   /* definition and creation of lvgl_heartbeat */
-  osThreadDef(lvgl_heartbeat, lvgl_heartbeat_func, osPriorityIdle, 0, 128);
+  osThreadDef(lvgl_heartbeat, lvgl_heartbeat_func, osPriorityAboveNormal, 0, 1024);
   lvgl_heartbeatHandle = osThreadCreate(osThread(lvgl_heartbeat), NULL);
+
+  /* definition and creation of init_task */
+  osThreadDef(init_task, start_init_task, osPriorityIdle, 0, 1024);
+  init_taskHandle = osThreadCreate(osThread(init_task), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -140,7 +160,8 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+    lv_tick_inc(5);
+    osDelay(5);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -170,7 +191,7 @@ __weak void StartLightTask(void const * argument)
 * @retval None
 */
 /* USER CODE END Header_lvgl_heartbeat_func */
-void lvgl_heartbeat_func(void const * argument)
+__weak void lvgl_heartbeat_func(void const * argument)
 {
   /* USER CODE BEGIN lvgl_heartbeat_func */
   /* Infinite loop */
@@ -180,6 +201,24 @@ void lvgl_heartbeat_func(void const * argument)
     osDelay(5);
   }
   /* USER CODE END lvgl_heartbeat_func */
+}
+
+/* USER CODE BEGIN Header_start_init_task */
+/**
+* @brief Function implementing the init_task thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_start_init_task */
+__weak void start_init_task(void const * argument)
+{
+  /* USER CODE BEGIN start_init_task */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END start_init_task */
 }
 
 /* Private application code --------------------------------------------------*/
