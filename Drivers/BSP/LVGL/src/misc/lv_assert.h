@@ -16,8 +16,7 @@ extern "C" {
 #include "../lv_conf_internal.h"
 #include "lv_log.h"
 #include "lv_mem.h"
-//#include LV_ASSERT_HANDLER_INCLUDE"stdint.h"
-#include "stdint.h"
+#include LV_ASSERT_HANDLER_INCLUDE
 
 /*********************
  *      DEFINES

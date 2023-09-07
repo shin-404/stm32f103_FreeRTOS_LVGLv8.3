@@ -10,8 +10,8 @@
 
 #include "lv_group.h"
 #include "../misc/lv_gc.h"
-#include "lv_obj.h"
-#include "lv_indev.h"
+#include "../core/lv_obj.h"
+#include "../core/lv_indev.h"
 
 /*********************
  *      DEFINES

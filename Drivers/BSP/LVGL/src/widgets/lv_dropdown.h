@@ -23,7 +23,7 @@ extern "C" {
 #error "lv_dropdown: lv_label is required. Enable it in lv_conf.h (LV_USE_LABEL 1)"
 #endif
 
-#include "lv_label.h"
+#include "../widgets/lv_label.h"
 
 /*********************
  *      DEFINES

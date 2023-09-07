@@ -9,7 +9,7 @@
 #include <stddef.h>
 #include "lv_bidi.h"
 #include "lv_txt.h"
-#include "lv_mem.h"
+#include "../misc/lv_mem.h"
 
 #if LV_USE_BIDI
 
